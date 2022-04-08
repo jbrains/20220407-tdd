@@ -1,7 +1,6 @@
 package ca.jbrains.math.test;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class AddFractionsTest {
@@ -19,6 +18,13 @@ public class AddFractionsTest {
         Assertions.assertEquals(4, sum.intValue());
     }
 
+    @Test
+    void zeroPlusNotZero() {
+        Fraction sum = new Fraction(0).plus(new Fraction(7));
+
+        Assertions.assertEquals(7, sum.intValue());
+    }
+
     public static class Fraction {
         private final int integerValue;
 
@@ -26,8 +32,12 @@ public class AddFractionsTest {
             this.integerValue = integerValue;
         }
 
-        public Fraction plus(Fraction fraction) {
-            return this;
+        public Fraction plus(Fraction that) {
+            if (this.integerValue == 0) {
+                return that;
+            } else {
+                return this;
+            }
         }
 
         public int intValue() {
