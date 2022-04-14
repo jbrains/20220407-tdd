@@ -25,6 +25,16 @@ public class SellOneItemTest {
         Assertions.assertEquals("$12.50", display.getText());
     }
 
+    @Test
+    void productNotFound() {
+        final Display display = new Display();
+        final Sale sale = new Sale(display);
+
+        sale.onBarcode("99999");
+
+        Assertions.assertEquals("Product not found: 99999", display.getText());
+    }
+
     public static class Sale {
         private final Display display;
 
@@ -37,6 +47,8 @@ public class SellOneItemTest {
                 display.setText("$7.95");
             else if ("23456".equals(barcode))
                 display.setText("$12.50");
+            else
+                display.setText(String.format("Product not found: %s", barcode));
         }
     }
 
